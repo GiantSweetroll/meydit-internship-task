@@ -8,10 +8,10 @@ const login = async (req, res) => {
     const password = req.body.password;
 
     // check if email exists
-    // TODO: check if email exists in db
-    const emailExists = true;
+    const dbUser = await db.getUser(email)
+    const emailExists = dbUser !== undefined;
     if (!emailExists) {
-        res.status(400).send({
+        return res.status(400).send({
             'status' : 400,
             'data' : 'A user with that email cannot be found'
         });
@@ -19,28 +19,24 @@ const login = async (req, res) => {
 
     // check password
     try {
-        // TODO: retrieve user details from db (remove password attribute)
-        const user = { email: "temp@gmail.com", password: "somehashedpassword"}     // TODO: replace with real db object
-        if (await bcrypt.compare(password, user.password)) {
+        if (await bcrypt.compare(password, dbUser.hashedPassword)) {
 
-            const accessToken = generateAccessToken(user);
+            const accessToken = generateAccessToken(dbUser);
+            const {hashedPassword, ...user} = dbUser 
 
-            res.send({
+            return res.send({
                 'user' : user,
                 'accessToken': accessToken
             });
         } else {
-            res.status(400).send({
+            return res.status(400).send({
                 'status' : 400,
                 'data' : 'Incorrect email or password'
             });
         }
     } catch (error) {
         console.log(error);
-        res.status(500).send({
-            "status" : 500,
-            "data" : "Something went wrong"
-        });
+        return res.sendStatus(500);
     }
 
 }
@@ -71,10 +67,7 @@ const register = async (req, res) => {
 
     user = await db.getUser(user.email)
 
-    const token = generateAccessToken({
-        email: user.email,
-        password: user.hashedPassword
-    })
+    const token = generateAccessToken(user)
 
     const {hashedPassword, ...exportUser} = user
 
@@ -87,8 +80,10 @@ const register = async (req, res) => {
 
 // Function to generate access tokens
 function generateAccessToken(user) {
-    // TODO: just use their email and password
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+    return jwt.sign({
+        email: user.email,
+        password: user.hashedPassword
+    }, process.env.ACCESS_TOKEN_SECRET);
 }
 
 // function to authenticate the access token
@@ -107,4 +102,5 @@ function authenticateToken(req, res, next) {
 module.exports = {
     login,
     register,
+    authenticateToken
 }

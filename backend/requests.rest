@@ -22,3 +22,13 @@ Content-Type: application/json
     "state" : "NSW",
     "password" : "password123"
 }
+
+###
+# Login user
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email" : "gardyanakbar99@gmail.com",
+    "password" : "password123"
+}

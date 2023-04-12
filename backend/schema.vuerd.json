@@ -3,9 +3,9 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -3.3333332008785725,
-    "scrollLeft": -189.16665914985907,
-    "zoomLevel": 0.9,
+    "scrollTop": -119.16666193140848,
+    "scrollLeft": -567.4999774495776,
+    "zoomLevel": 0.8,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -235,7 +235,7 @@
           "active": false,
           "left": 111.666,
           "top": 29.1668,
-          "zIndex": 442,
+          "zIndex": 5,
           "widthName": 60,
           "widthComment": 60
         },
@@ -249,7 +249,7 @@
           {
             "name": "id",
             "comment": "",
-            "dataType": "INTEGER",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -272,7 +272,7 @@
           {
             "name": "jobId",
             "comment": "FK",
-            "dataType": "INTEGER",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -295,7 +295,7 @@
           {
             "name": "imgStr",
             "comment": "BASE64 String",
-            "dataType": "VARCHAR",
+            "dataType": "LONGTEXT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -310,7 +310,7 @@
               "pfk": false,
               "widthName": 60,
               "widthComment": 88.71533203125,
-              "widthDataType": 64.6005859375,
+              "widthDataType": 72.0654296875,
               "widthDefault": 60
             },
             "id": "c12e3710-e176-43e1-8145-20f352c33591"
@@ -318,9 +318,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 539.1664,
-          "top": 59.1667,
-          "zIndex": 439,
+          "left": 542.2915,
+          "top": 56.0416,
+          "zIndex": 102,
           "widthName": 65.5908203125,
           "widthComment": 60
         },
@@ -334,7 +334,7 @@
           {
             "name": "id",
             "comment": "",
-            "dataType": "INTEGER",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -357,7 +357,7 @@
           {
             "name": "name",
             "comment": "",
-            "dataType": "VARCHAR",
+            "dataType": "TEXT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -372,7 +372,7 @@
               "pfk": false,
               "widthName": 60,
               "widthComment": 60,
-              "widthDataType": 64.6005859375,
+              "widthDataType": 60,
               "widthDefault": 60
             },
             "id": "87bb3b15-29e2-465c-b6e8-774bc9a3f83f"
@@ -380,9 +380,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 547.4991,
-          "top": 393.3337,
-          "zIndex": 421,
+          "left": 533.9576,
+          "top": 394.3754,
+          "zIndex": 103,
           "widthName": 60,
           "widthComment": 60
         },
@@ -396,7 +396,7 @@
           {
             "name": "id",
             "comment": "",
-            "dataType": "INTEGER",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -442,7 +442,7 @@
           {
             "name": "comments",
             "comment": "",
-            "dataType": "VARCHAR",
+            "dataType": "MEDIUMTEXT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -457,7 +457,7 @@
               "pfk": false,
               "widthName": 61.9599609375,
               "widthComment": 60,
-              "widthDataType": 64.6005859375,
+              "widthDataType": 87.94091796875,
               "widthDefault": 60
             },
             "id": "6af64164-d92e-423e-b061-6f8b317791d7"
@@ -465,7 +465,7 @@
           {
             "name": "jobId",
             "comment": "FK",
-            "dataType": "INTEGER",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -488,9 +488,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 116.6676,
-          "top": 293.3332,
-          "zIndex": 443,
+          "left": 147.3387,
+          "top": 291.1343,
+          "zIndex": 118,
           "widthName": 60,
           "widthComment": 60
         },
@@ -504,7 +504,7 @@
           {
             "name": "id",
             "comment": "",
-            "dataType": "INTEGER",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -527,7 +527,7 @@
           {
             "name": "clothingId",
             "comment": "FK",
-            "dataType": "INTEGER",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -548,9 +548,9 @@
             "id": "96574d8f-5a9c-45b5-ad9d-a4a2a66991df"
           },
           {
-            "name": "desc",
+            "name": "description",
             "comment": "",
-            "dataType": "VARCHAR",
+            "dataType": "TEXT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -563,9 +563,9 @@
               "pk": false,
               "fk": false,
               "pfk": false,
-              "widthName": 60,
+              "widthName": 64.8671875,
               "widthComment": 60,
-              "widthDataType": 64.6005859375,
+              "widthDataType": 60,
               "widthDefault": 60
             },
             "id": "3e8bef51-837f-45cb-b543-02370bdbce3c"
@@ -596,7 +596,7 @@
           {
             "name": "statusId",
             "comment": "FK",
-            "dataType": "INTEGER",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -619,7 +619,7 @@
           {
             "name": "userId",
             "comment": "FK",
-            "dataType": "INTEGER",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -641,10 +641,10 @@
           }
         ],
         "ui": {
-          "active": false,
-          "left": 534.9995,
-          "top": 196.6673,
-          "zIndex": 435,
+          "active": true,
+          "left": 526.4343,
+          "top": 193.8895,
+          "zIndex": 122,
           "widthName": 60,
           "widthComment": 60
         },
@@ -658,7 +658,7 @@
           {
             "name": "id",
             "comment": "",
-            "dataType": "INTEGER",
+            "dataType": "INT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -681,7 +681,7 @@
           {
             "name": "type",
             "comment": "",
-            "dataType": "VARCHAR",
+            "dataType": "TEXT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -696,7 +696,7 @@
               "pfk": false,
               "widthName": 60,
               "widthComment": 60,
-              "widthDataType": 64.6005859375,
+              "widthDataType": 60,
               "widthDefault": 60
             },
             "id": "ff3bea3b-372e-4277-aa40-b98ced4756b3"
@@ -706,7 +706,7 @@
           "active": false,
           "left": 915.0006,
           "top": 201.6664,
-          "zIndex": 432,
+          "zIndex": 56,
           "widthName": 60,
           "widthComment": 60
         },

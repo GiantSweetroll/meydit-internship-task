@@ -42,7 +42,58 @@ async function initTables() {
     hashedPassword TEXT NOT NULL,
     PRIMARY KEY (id)
   )`
+  await db.query(query)
 
+  query = `CREATE TABLE IF NOT EXISTS Status
+  (
+    id   INT NOT NULL AUTO_INCREMENT,
+    name TEXT NOT NULL,
+    PRIMARY KEY (id)
+  )`
+  await db.query(query)
+
+  query = `CREATE TABLE IF NOT EXISTS Clothing
+  (
+    id   INT  NOT NULL AUTO_INCREMENT,
+    type TEXT NOT NULL,
+    PRIMARY KEY (id)
+  )`
+  await db.query(query)
+
+  query = `CREATE TABLE IF NOT EXISTS Jobs
+  (
+    id         INT    NOT NULL AUTO_INCREMENT,
+    clothingId INT    NOT NULL,
+    description TEXT   NOT NULL,
+    budget     DOUBLE NULL    ,
+    statusId   INT    NOT NULL,
+    userId     INT    NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (statusId) REFERENCES Status(id) ON UPDATE CASCADE,
+    FOREIGN KEY (clothingId) REFERENCES Clothing(id) ON UPDATE CASCADE,
+    FOREIGN KEY (userId) REFERENCES User(id) ON UPDATE CASCADE
+  )`
+  await db.query(query)
+
+  query = `CREATE TABLE IF NOT EXISTS JobImages
+  (
+    id     INT      NOT NULL AUTO_INCREMENT,
+    jobId  INT      NOT NULL,
+    imgStr LONGTEXT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (jobId) REFERENCES Jobs(id) ON UPDATE CASCADE
+  )`
+  await db.query(query)
+
+  query = `CREATE TABLE IF NOT EXISTS Quotes
+  (
+    id       INT        NOT NULL AUTO_INCREMENT,
+    price    DOUBLE     NOT NULL DEFAULT 0,
+    comments MEDIUMTEXT NULL    ,
+    jobId    INT        NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (jobId) REFERENCES Jobs(id) ON UPDATE CASCADE
+  )`
   await db.query(query)
 }
 
