@@ -1,0 +1,7 @@
+# Post a job
+POST http://localhost:3000/consumer/job
+Content-Type: application/json
+
+{
+    "userId" : 1
+}
