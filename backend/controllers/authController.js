@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/dbModels')
+const db = require('./dbController');
 
 const login = async (req, res) => {
     const email = req.body.email;
@@ -44,29 +45,42 @@ const login = async (req, res) => {
 
 }
 
-const register = (req, res) => {
+const register = async (req, res) => {
     const body = req.body
 
     // check email does not exist in the db
-    const emailExists = false
+    const dbUser = await db.getUser(body.email)
+    const emailExists = dbUser !== undefined
     if (emailExists) {
-        res.status(400).send({
+        return res.status(400).send({
             'status' : 400,
             'data' : 'Email already exists'
         })
     }
 
-    // TODO: insert user details into the db and get user object
-    const user = {}     // TODO: replace with real user data
+    // create hashed password
+    const hPass = await bcrypt.hash(req.body.password, 10)
+
+    var user = {
+        ...body,
+        hashedPassword: hPass
+    }
+
+    // insert user details into the db
+    await db.registerUser(user)
+
+    user = await db.getUser(user.email)
 
     const token = generateAccessToken({
-        email: body.email,
-        password: body.password
+        email: user.email,
+        password: user.hashedPassword
     })
+
+    const {hashedPassword, ...exportUser} = user
 
     res.status(201).send({
         'status' : 201,
-        'user' : user,
+        'user' : exportUser,
         'accessToken' : token
     })
 }

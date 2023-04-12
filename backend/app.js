@@ -8,6 +8,9 @@ const authRoutes = require('./routes/authRoutes')
 const app = express();
 app.listen(3000);
 
+// db
+require('./controllers/dbController').init()
+
 // middleware and static files
 app.use(cors());
 app.use(express.static('public'));

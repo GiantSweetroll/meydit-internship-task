@@ -5,3 +5,20 @@ Content-Type: application/json
 {
     "userId" : 1
 }
+
+###
+
+# Register user
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "firstname" : "Gardyan",
+    "lastname" : "Akbar",
+    "phone" : "1234567890",
+    "email" : "gardyanakbar99@gmail.com",
+    "address" : "60 Northfields Ave, Keiraville",
+    "postal" : 2500,
+    "state" : "NSW",
+    "password" : "password123"
+}
