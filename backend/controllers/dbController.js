@@ -94,8 +94,10 @@ async function initTables() {
     price    DOUBLE     NOT NULL DEFAULT 0,
     comments MEDIUMTEXT NULL    ,
     jobId    INT        NOT NULL,
+    makerId INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (jobId) REFERENCES Jobs(id) ON UPDATE CASCADE
+    FOREIGN KEY (jobId) REFERENCES Jobs(id) ON UPDATE CASCADE,
+    FOREIGN KEY (makerId) REFERENCES User(id) ON UPDATE CASCADE
   )`
   await db.query(query)
 }
@@ -187,9 +189,50 @@ async function postJob(job) {
   await db.query(query.substring(0, query.length-1))
 }
 
+async function getAllJobs() {
+  // get all jobs
+  var query = `SELECT 
+  j.id, j.clothingId, 
+  j.descr, j.budget, 
+  j.statusId, j.userId,
+  i.id as jobImageId,
+  i.imgStr, COUNT(q.id) as quotesNum 
+  FROM Jobs j
+  LEFT JOIN JobImages i
+  ON j.id = i.jobId
+  LEFT JOIN Quotes q
+  ON j.id = q.jobId
+  GROUP BY j.id, j.clothingId, 
+  j.descr, j.budget, 
+  j.statusId, j.userId,
+  jobImageId,
+  i.imgStr`
+  var queryRes = await db.query(query)
+  return queryRes[0]
+}
+
+async function createQuotes(
+  makerId, 
+  jobId, 
+  price, 
+  comments
+) {
+  const query = `INSERT INTO Quotes (
+    makerId, jobId,
+    price, comments
+  ) VALUES (
+    ${makerId}, ${jobId},
+    ${price}, "${comments}"
+  )`
+
+  return await db.query(query)
+}
+
 module.exports = {
   init,
   getUser,
   registerUser,
-  postJob
+  postJob,
+  getAllJobs,
+  createQuotes
 }

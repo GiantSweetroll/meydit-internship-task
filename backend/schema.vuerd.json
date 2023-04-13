@@ -3,8 +3,8 @@
     "version": "2.2.11",
     "width": 2000,
     "height": 2000,
-    "scrollTop": -124.1666617327263,
-    "scrollLeft": -618.3333087629752,
+    "scrollTop": -140.8333277371193,
+    "scrollLeft": -294.16665497753377,
     "zoomLevel": 0.8,
     "show": {
       "tableComment": true,
@@ -484,13 +484,36 @@
               "widthDefault": 60
             },
             "id": "5860160e-b659-45e6-8653-4577a6d983cc"
+          },
+          {
+            "name": "makerId",
+            "comment": "FK",
+            "dataType": "INT",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "31f70f70-9918-493c-a637-695bae089f35"
           }
         ],
         "ui": {
-          "active": false,
+          "active": true,
           "left": 147.3387,
           "top": 291.1343,
-          "zIndex": 118,
+          "zIndex": 137,
           "widthName": 60,
           "widthComment": 60
         },
