@@ -3,7 +3,33 @@ POST http://localhost:3000/consumer/job
 Content-Type: application/json
 
 {
-    "userId" : 1
+    "userId" : 1,
+    "clothingId" : 1,
+    "description": "Id cupidatat dolore id magna consequat dolore elit voluptate culpa.",
+    "statusId" : 1,
+    "images" : [
+        "imagebytes1",
+        "imagebytes2",
+        "imagebytes3"
+    ]
+}
+
+###
+
+# Get all jobs
+GET http://localhost:3000/maker/jobs
+
+###
+
+# send quotes
+POST http://localhost:3000/maker/send-quotes
+Content-Type: application/json
+
+{
+    "makerId" : 1,
+    "jobId" : 1,
+    "price" : 450.50,
+    "comments" : "Quis deserunt minim incididunt sunt consequat nulla deserunt cupidatat."
 }
 
 ###
