@@ -25,6 +25,9 @@ async function init() {
 
   // init tables
   await initTables().catch((err) => {throw err})
+
+  // init default data
+  await initData().catch((err) => {throw err}) 
 }
 
 async function initTables() {
@@ -64,7 +67,7 @@ async function initTables() {
   (
     id         INT    NOT NULL AUTO_INCREMENT,
     clothingId INT    NOT NULL,
-    description TEXT   NOT NULL,
+    descr TEXT   NOT NULL,
     budget     DOUBLE NULL    ,
     statusId   INT    NOT NULL,
     userId     INT    NOT NULL,
@@ -97,6 +100,23 @@ async function initTables() {
   await db.query(query)
 }
 
+async function initData() {
+  // Insert clothings
+  var query = `INSERT INTO Clothing (id, type) VALUES 
+  (1, "Dress"),
+  (2, "Ethnic Wear - Sari"),
+  (3, "Blouse") 
+  ON DUPLICATE KEY UPDATE id=id`
+  await db.query(query)
+
+  query = `INSERT INTO Status (id, name) VALUES 
+  (1, "Open"),
+  (2, "Closed"),
+  (3, "Completed") 
+  ON DUPLICATE KEY UPDATE id=id`
+  await db.query(query)
+}
+
 async function getUser(email) {
   const query = `SELECT * FROM User WHERE email="${email}"`
 
@@ -121,8 +141,55 @@ async function registerUser(user) {
   return await db.query(query)
 }
 
+async function postJob(job) {
+
+  // if budget is undefined, make it null
+  if (job.budget === undefined) {
+    job.budget = null
+  }
+
+  // insert to job to job table
+  var query = `INSERT INTO Jobs (
+    clothingId, descr, 
+    budget, 
+    statusId,
+    userId
+  ) VALUES (
+    ${job.clothingId}, "${job.description}",
+    ${job.budget}, 
+    ${job.statusId}, 
+    ${job.userId}
+  )`
+  await db.query(query)
+
+  // insert images to JobImages table if there are
+  if (job.images === undefined || job.images === null || job.images.length == 0) return
+
+  // get the inserted job to get its id
+  query = `SELECT * FROM Jobs WHERE
+  clothingId=${job.clothingId} AND
+  descr="${job.description}" AND
+  ${job.budget === null? "budget IS NULL" : `budget=${job.budget}`} AND
+  statusId=${job.statusId} AND
+  userId=${job.userId}`
+  const queryResult = await db.query(query)
+  const newJob = queryResult[0][0]
+
+  // create batch insert query
+  query = `INSERT INTO JobImages (
+    jobId, imgStr
+  ) VALUES `
+
+  for (var i=0; i < job.images.length; i++) {
+    query += `(${newJob.id}, "${job.images[i]}"),`
+  }
+
+  await db.query(query.substring(0, query.length-1))
+}
+
 module.exports = {
   init,
   getUser,
-  registerUser
+  registerUser,
+  postJob
 }
