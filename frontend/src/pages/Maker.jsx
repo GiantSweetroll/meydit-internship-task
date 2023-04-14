@@ -2,8 +2,13 @@ import { Container, Typography } from '@mui/material'
 import React from 'react'
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter, Search } from '@syncfusion/ej2-react-grids';
 import { dummyJobs } from '../data/dummy';
+import { useStateContext } from '../contexts/ContextProvider';
+import { useNavigate } from 'react-router-dom';
 
 export const Maker = () => {
+
+    const { setSelectedJobDetails } = useStateContext()
+    const navigate = useNavigate()
 
     const jobsGrid = [
         { 
@@ -34,8 +39,8 @@ export const Maker = () => {
       ];
 
       const handleRowSelection = (row) => {
-        console.log(row.data)
-        // TODO: Open details page
+        setSelectedJobDetails(row.data)
+        navigate('/job-deets')
       }
 
   return (

@@ -99,6 +99,7 @@ const PostJob = () => {
                 onClear={() => setImages([])}
                 onImageUploaded={(image) => {
                     const newImages = images
+                    console.log(image)
                     newImages.push(image)
                     setImages(newImages)
                 }}

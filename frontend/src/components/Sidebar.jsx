@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Drawer, Typography, List, ListItem, ListItemText, ListItemButton, } from '@mui/material'
+import { Drawer, Typography, List, ListItemText, ListItemButton, } from '@mui/material'
 import { useTheme } from '@mui/material/styles';
 
 const drawerWidth = 240
@@ -58,7 +58,7 @@ export const Sidebar = (props) => {
                     {menuItems.map(item => {
                         return <ListItemButton
                             key={item.text}
-                            selected={location.pathname == item.path}
+                            selected={location.pathname === item.path}
                             onClick={(e) => {
                                 navigate(item.path)
                             }}
