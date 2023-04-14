@@ -19,8 +19,26 @@ const PostJob = () => {
         },
     }
 
-    const [titleError, setTitleError] = useState(false)
+    const [descError, setDescError] = useState(false)
+    const [clothingError, setClothingError] = useState(false)
+    const [imagesError, setImagesError] = useState(false)
+    const [clothingType, setClothingType] = useState({label: 'Dress', clothingId: 1})
     const [images, setImages] = useState([])
+    const [desc, setDesc] = useState('')
+    const [budget, setBudget] = useState(null)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()    // So it doesnt refresh the page
+
+        setDescError(desc == '')
+        setClothingError(clothingType == null)
+        setImagesError(images.length == 0)
+
+        if (clothingType && desc && images.length > 0) {
+            console.log(clothingType, desc, budget)
+            // TODO: Send to backend
+        }
+    }
 
   return (
     <Container>
@@ -34,13 +52,24 @@ const PostJob = () => {
         </Typography>
 
         <form
-            onSubmit={(e) => {}}
+            noValidate
+            autoComplete='off'
+            onSubmit={handleSubmit}
         >
             <Autocomplete
                 disablePortal
+                value={clothingType}
                 options={dummyOptions}
                 sx={classes.field}
-                renderInput={(params) => <TextField {...params} label="Types of Clothing" />}
+                renderInput={(params) => <TextField 
+                    {...params} 
+                    label="Types of Clothing" 
+                    error={clothingError}
+                />}
+                isOptionEqualToValue={(option, value) => option.clothingId === value.clothingId}
+                onChange={(event, value) => {
+                    setClothingType(value)
+                }}
             />
             <TextField
                 label="Description"
@@ -51,7 +80,10 @@ const PostJob = () => {
                 minRows={4}
                 required
                 sx={classes.field}
-                error={titleError}
+                error={descError}
+                onChange={(e) => {
+                    setDesc(e.target.value)
+                }}
             />
 
             {/* Upload images */}
@@ -71,6 +103,14 @@ const PostJob = () => {
                     setImages(newImages)
                 }}
             />
+            {imagesError? <Typography
+                color='error'
+                sx={{
+                    marginTop: '5px'
+                }}
+            >
+                Please upload at least one image
+            </Typography> : null}
 
             <TextField
                 className='mb-4'
@@ -85,6 +125,9 @@ const PostJob = () => {
                 type='number'
                 InputProps={{
                     startAdornment: <InputAdornment position="start">A$</InputAdornment>,
+                }}
+                onChange={(e) => {
+                    setBudget(e.target.value)
                 }}
             />
 
