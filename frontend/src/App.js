@@ -3,13 +3,12 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 import './App.css';
-import { useStateContext } from './contexts/ContextProvider';
-import Auth from './pages/Auth'
+import PostJob from './pages/PostJob';
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Auth/>
+      <PostJob/>
     </BrowserRouter>
   )
 }
