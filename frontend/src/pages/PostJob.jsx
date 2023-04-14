@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { Autocomplete, Button, Container, TextField, Typography, Card, CardActionArea, CardContent, Fab, Grid } from '@mui/material'
-import { useForm } from 'react-hook-form'
-import { AddPhotoAlternate } from '@mui/icons-material'
+import { Autocomplete, Box, Button, Container, TextField, Typography } from '@mui/material'
+import { ImagePicker } from '../components/ImagePicker'
 
 const PostJob = () => {
 
@@ -17,35 +16,11 @@ const PostJob = () => {
             marginBottom: 2,
             marginTop: 2,
             display: 'block'
-        }
+        },
     }
 
     const [titleError, setTitleError] = useState(false)
-    const { register,handleSubmit,reset } = useForm();
-    const [uploadState, setUploadState] = useState("initial");
-    const [image, setImage] = useState("");
-
-    const handleUploadClick = (event) => {
-        var file = event.target.files[0];
-        const reader = new FileReader();
-        if (file) {
-          reader.readAsDataURL(file);
-          reader.onloadend = function (e) {
-            setImage(reader.result);
-            setUploadState("uploaded");
-          };
-        }
-      };
-    
-      const handleResetClick = (event) => {
-        setImage(null);
-        setUploadState("initial");
-        reset({ logo: null });
-      };
-    
-      const onUpload = (data) => {
-        console.log(data.logo[0])
-      }
+    const [images, setImages] = useState([])
 
   return (
     <Container>
@@ -79,34 +54,23 @@ const PostJob = () => {
                 error={titleError}
             />
 
-            <Card>
-                <CardContent>
-                <Grid container justify="center" alignItems="center">
-                    <input
-                        accept="image/jpeg,image/png,image/tiff,image/webp"
-                        // className={classes.input}
-                        id="contained-button-file"
-                        name="logo"
-                        {...register('test', { required: true })}
-                        type="file"
-                        onChange={handleUploadClick}
-                    />
-                        <label
-                            htmlFor="contained-button-file"
-                            className={uploadState === "uploaded" ? classes.input : null}
-                        >
-                    <Fab component="span" className={classes.button}>
-                        <AddPhotoAlternate />
-                    </Fab>
-                    </label>
-                </Grid>
-                </CardContent>
-                {uploadState === "uploaded" && (
-                    <CardActionArea onClick={handleResetClick}>
-                        <img className={classes.logo} src={image} alt="LOGO" />
-                    </CardActionArea>
-                )}
-            </Card>
+            {/* Upload images */}
+            <Typography
+                variant='body'
+                color='textSecondary'
+                component='h2'
+                gutterBottom
+            >
+                Upload images of the type of clothing you want made
+            </Typography>
+            <ImagePicker
+                onClear={() => setImages([])}
+                onImageUploaded={(image) => {
+                    const newImages = images
+                    newImages.push(image)
+                    setImages(newImages)
+                }}
+            />
 
             <TextField
                 className='mb-4'
@@ -118,13 +82,15 @@ const PostJob = () => {
                 error={titleError}
             />
 
-            <Button
-                type='submit'
-                color='secondary'
-                variant='contained'
-            >
-                Post
-            </Button>
+            <Box textAlign='center'>
+                <Button
+                    type='submit'
+                    color='secondary'
+                    variant='contained'
+                >
+                    Post
+                </Button>
+            </Box>
         </form>
 
     </Container>
