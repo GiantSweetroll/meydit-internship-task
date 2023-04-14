@@ -6,9 +6,9 @@ const PostJob = () => {
 
     // TODO: Retrieve from DB
     const dummyOptions = [
-        {label: 'Dress'},
-        {label: 'Ethnic Wear - Sari'},
-        {label: 'Blouse'},
+        {label: 'Dress', clothingId: 1},
+        {label: 'Ethnic Wear - Sari', clothingId: 2},
+        {label: 'Blouse', clothingId: 3},
     ]
 
     const classes = {
@@ -93,6 +93,10 @@ const PostJob = () => {
                     type='submit'
                     color='secondary'
                     variant='contained'
+                    sx={{
+                        paddingLeft: 10,
+                        paddingRight: 10
+                    }}
                 >
                     Post
                 </Button>
