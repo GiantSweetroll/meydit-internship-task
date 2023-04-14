@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Autocomplete, Box, Button, Container, TextField, Typography } from '@mui/material'
+import { Autocomplete, Box, Button, Container, InputAdornment, TextField, Typography } from '@mui/material'
 import { ImagePicker } from '../components/ImagePicker'
 
 const PostJob = () => {
@@ -78,8 +78,14 @@ const PostJob = () => {
                 variant='outlined'
                 color='secondary'
                 fullWidth
-                sx={classes.field}
-                error={titleError}
+                sx={{
+                    marginTop: '30px',
+                    marginBottom: '20px'
+                }}
+                type='number'
+                InputProps={{
+                    startAdornment: <InputAdornment position="start">A$</InputAdornment>,
+                }}
             />
 
             <Box textAlign='center'>
