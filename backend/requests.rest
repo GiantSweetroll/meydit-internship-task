@@ -7,6 +7,7 @@ Content-Type: application/json
     "clothingId" : 1,
     "description": "Id cupidatat dolore id magna consequat dolore elit voluptate culpa.",
     "statusId" : 1,
+    "budget" : null,
     "images" : [
         "imagebytes1",
         "imagebytes2",
@@ -58,3 +59,18 @@ Content-Type: application/json
     "email" : "gardyanakbar99@gmail.com",
     "password" : "password123"
 }
+
+###
+
+# get all clothing types
+GET http://localhost:3000/queries/clothings
+
+###
+
+# get user
+GET http://localhost:3000/queries/user/1
+
+###
+
+# get all status types
+GET http://localhost:3000/queries/statuses

@@ -7,18 +7,17 @@ import { Maker } from './pages/Maker';
 import { MakerDetails } from './pages/MakerDetails'
 import { Sidebar } from './components/Sidebar';
 import { useStateContext } from './contexts/ContextProvider';
-import { getClothingTypes } from './controllers/backendController';
+import { getClothingTypes, getStatusTypes } from './controllers/backendController';
 
 const App = () => {
 
-  const { setClothingTypes } = useStateContext()
+  const { setClothingTypes, setStatusTypes } = useStateContext()
 
-  // get all possible clothings
+  // get all possible clothings and status types
   useEffect(() => {
     getClothingTypes()
       .then((data) => {
           const options = []
-          
           data.forEach((clothing) => {
               options.push({
                   label: clothing.type,
@@ -28,7 +27,12 @@ const App = () => {
 
           setClothingTypes(options)
       })
-  }, [])
+
+    getStatusTypes()
+      .then((data) => {
+          setStatusTypes(data)
+      })
+  }, [setClothingTypes, setStatusTypes])
 
   return (
     <BrowserRouter>

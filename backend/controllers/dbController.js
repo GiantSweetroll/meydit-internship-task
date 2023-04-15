@@ -127,6 +127,14 @@ async function getUser(email) {
   return res[0][0]
 }
 
+async function getUserById(id) {
+  const query = `SELECT * FROM User WHERE id="${id}"`
+
+  const res = await db.execute(query)
+
+  return res[0][0]
+}
+
 async function registerUser(user) {
   const query = `INSERT INTO User (
     firstname, lastname, 
@@ -195,24 +203,25 @@ async function getAllJobs() {
   j.id, j.clothingId, 
   j.descr, j.budget, 
   j.statusId, j.userId,
-  i.id as jobImageId,
-  i.imgStr, COUNT(q.id) as quotesNum 
+  COUNT(q.id) as quotesNum 
   FROM Jobs j
-  LEFT JOIN JobImages i
-  ON j.id = i.jobId
   LEFT JOIN Quotes q
   ON j.id = q.jobId
   GROUP BY j.id, j.clothingId, 
   j.descr, j.budget, 
-  j.statusId, j.userId,
-  jobImageId,
-  i.imgStr`
+  j.statusId, j.userId`
   var queryRes = await db.query(query)
   return queryRes[0]
 }
 
 async function getAllClothingTypes() {
   const query = `SELECT * FROM Clothing`
+  const queryRes = await db.query(query)
+  return queryRes[0]
+}
+
+async function getAllStatus() {
+  const query = `SELECT * FROM Status`
   const queryRes = await db.query(query)
   return queryRes[0]
 }
@@ -241,5 +250,7 @@ module.exports = {
   postJob,
   getAllJobs,
   createQuotes,
-  getAllClothingTypes
+  getAllClothingTypes,
+  getUserById,
+  getAllStatus
 }

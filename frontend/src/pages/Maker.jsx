@@ -1,14 +1,16 @@
 import { Container, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter, Search } from '@syncfusion/ej2-react-grids';
 import { useStateContext } from '../contexts/ContextProvider';
 import { useNavigate } from 'react-router-dom';
+import { getJobList, getUserData } from '../controllers/backendController';
 
 export const Maker = () => {
 
-    const { setSelectedJobDetails } = useStateContext()
+    const { setSelectedJobDetails, clothingTypes, statusTypes } = useStateContext()
     const navigate = useNavigate()
     const [jobs, setJobs] = useState([])
+    const [userDataCollection, setUserDataCollection] = useState({})
 
     const jobsGrid = [
         { 
@@ -42,6 +44,42 @@ export const Maker = () => {
         setSelectedJobDetails(row.data)
         navigate('/job-deets')
       }
+
+    useEffect(() => {
+        getJobList()
+            .then((jobs) => {
+                const jobsList = []
+                const newUserDataCollection = {...userDataCollection}
+                const clothingOptions = {}
+                const statusOptions = {}
+
+                clothingTypes.forEach((c) => {
+                    clothingOptions[c.clothingId] = c.label
+                })
+                statusTypes.forEach((s) => {
+                    statusOptions[s.id] = s.name
+                })
+
+                jobs.forEach(async (job) => {
+                    const userId = job.userId
+                    if (!(userId in newUserDataCollection)) {
+                        const user = await getUserData(userId)
+                        newUserDataCollection[user.id] = user
+                    }
+
+                    jobsList.push({
+                        location: `${newUserDataCollection[userId].address}, ${newUserDataCollection[userId].postal} ${newUserDataCollection[userId].state}`,
+                        clothingType: clothingOptions[job.clothingId],
+                        quotations: job.quotesNum,
+                        status: statusOptions[job.statusId]
+                    })
+                    
+                });
+
+                setJobs(jobsList)
+                setUserDataCollection(newUserDataCollection)
+            })
+    }, [clothingTypes, statusTypes, userDataCollection])
 
   return (
     <Container>

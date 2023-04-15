@@ -13,6 +13,19 @@ async function getClothingTypes() {
     return result.clothingTypes
 }
 
+async function getStatusTypes() {
+    const result = await fetch(
+        hostname + '/queries/statuses', {
+            method: 'GET'
+        }
+    ).then((res) => {
+        if (res.status !== 201 && res.status !== 200) throw new Error(`Error ${res.status}`)
+        return res.json()
+    })
+
+    return result.statuses
+}
+
 async function registerUser(user) {
     const result = await fetch(
         hostname + '/auth/register', {
@@ -42,8 +55,37 @@ async function postJob(job) {
     .catch((err) => {throw err})
 }
 
+async function getJobList() {
+    const result = await fetch(
+        hostname + '/maker/jobs', {
+            method: 'GET'
+        }
+    ).then((res) => {
+        if (res.status !== 201 && res.status !== 200) throw new Error(`Error ${res.status}`)
+        return res.json()
+    })
+
+    return result.jobs
+}
+
+async function getUserData(id) {
+    const result = await fetch(
+        hostname + `/queries/user/${id}`, {
+            method: 'GET'
+        }
+    ).then((res) => {
+        if (res.status !== 201 && res.status !== 200) throw new Error(`Error ${res.status}`)
+        return res.json()
+    })
+
+    return result.user
+}
+
 module.exports = {
     registerUser,
     postJob,
-    getClothingTypes
+    getClothingTypes,
+    getJobList,
+    getUserData,
+    getStatusTypes
 }
