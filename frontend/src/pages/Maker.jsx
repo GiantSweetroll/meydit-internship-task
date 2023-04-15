@@ -1,7 +1,6 @@
 import { Container, Typography } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter, Search } from '@syncfusion/ej2-react-grids';
-import { dummyJobs } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,6 +8,7 @@ export const Maker = () => {
 
     const { setSelectedJobDetails } = useStateContext()
     const navigate = useNavigate()
+    const [jobs, setJobs] = useState([])
 
     const jobsGrid = [
         { 
@@ -56,7 +56,7 @@ export const Maker = () => {
 
         {/* Table */}
         <GridComponent
-            dataSource={dummyJobs}
+            dataSource={jobs}
             allowPaging
             allowSorting
             toolbar={['Search']}

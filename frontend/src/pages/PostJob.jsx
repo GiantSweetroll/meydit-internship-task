@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Autocomplete, Box, Button, Container, InputAdornment, TextField, Typography } from '@mui/material'
 import { ImagePicker } from '../components/ImagePicker'
-import { getClothingTypes, registerUser, postJob } from '../controllers/backendController'
+import { registerUser, postJob } from '../controllers/backendController'
+import { useStateContext } from '../contexts/ContextProvider'
 
 const PostJob = () => {
+    
     const classes = {
         field: {
             marginBottom: 2,
@@ -12,24 +14,7 @@ const PostJob = () => {
         },
     }
 
-    // get all possible clothings
-    useEffect(() => {
-        getClothingTypes()
-            .then((data) => {
-                const options = []
-                
-                data.forEach((clothing) => {
-                    options.push({
-                        label: clothing.type,
-                        clothingId: clothing.id
-                    })
-                })
-
-                setClothingTypes(options)
-            })
-    }, [])
-    
-    const [clothingTypes, setClothingTypes] = useState([])
+    const { clothingTypes } = useStateContext()
     const [descError, setDescError] = useState(false)
     const [clothingError, setClothingError] = useState(false)
     const [imagesError, setImagesError] = useState(false)

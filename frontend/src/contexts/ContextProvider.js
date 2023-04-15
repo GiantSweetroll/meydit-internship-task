@@ -4,11 +4,13 @@ const StateContext = createContext();
 
 export const ContextProvider = ({children}) => {
     const [selectedJobDetails, setSelectedJobDetails] = useState({})
+    const [clothingTypes, setClothingTypes] = useState([])
 
     return (
         <StateContext.Provider
             value = {{
-                selectedJobDetails, setSelectedJobDetails
+                selectedJobDetails, setSelectedJobDetails,
+                clothingTypes, setClothingTypes
             }}
         >
             {children}
