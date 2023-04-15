@@ -26,15 +26,42 @@ const PostJob = () => {
     const [images, setImages] = useState([])
     const [desc, setDesc] = useState('')
     const [budget, setBudget] = useState(null)
+    const [firstName, setFirstName] = useState('')
+    const [firstNameError, setFirstNameError] = useState(false)
+    const [lastName, setLastName] = useState('')
+    const [phone, setPhone] = useState('')
+    const [phoneError, setPhoneError] = useState(false)
+    const [email, setEmail] = useState('')
+    const [emailError, setEmailError] = useState('')
+    const [address, setAddress] = useState('')
+    const [addressError, setAddressError] = useState(false)
+    const [postal, setPostal] = useState('')
+    const [postalError, setPostalError] = useState(false)
+    const [stateAddr, setStateAddr] = useState('')
+    const [stateAddrError, setStateAddrError] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()    // So it doesnt refresh the page
 
-        setDescError(desc == '')
-        setClothingError(clothingType == null)
-        setImagesError(images.length == 0)
+        setAddressError(address === '')
+        setFirstNameError(firstName === '')
+        setEmailError(email === '')
+        setPhoneError(phone === '')
+        setPostalError(postal === '')
+        setStateAddrError(stateAddr === '')
+        setDescError(desc === '')
+        setClothingError(clothingType === null)
+        setImagesError(images.length === 0)
 
-        if (clothingType && desc && images.length > 0) {
+        if (clothingType 
+            && desc 
+            && images.length > 0
+            && firstName
+            && phone
+            && email
+            && postal
+            && stateAddr
+        ) {
             console.log(clothingType, desc, budget)
             // TODO: Send to backend
         }
@@ -56,6 +83,97 @@ const PostJob = () => {
             autoComplete='off'
             onSubmit={handleSubmit}
         >
+            <div className='xs:flex md:grid md:grid-cols-2 md:gap-x-5 md:items-stretch'>
+                <TextField
+                    label="First Name"
+                    variant='outlined'
+                    color='secondary'
+                    required
+                    sx={classes.field}
+                    error={firstNameError}
+                    fullWidth
+                    onChange={(e) => {
+                        setFirstName(e.target.value)
+                    }}
+                />
+                <TextField
+                    label="Last Name"
+                    variant='outlined'
+                    color='secondary'
+                    fullWidth
+                    sx={classes.field}
+                    onChange={(e) => {
+                        setLastName(e.target.value)
+                    }}
+                />
+            </div>
+            <div className='xs:flex md:grid md:grid-cols-2 md:gap-x-5 md:items-stretch'>
+                <TextField
+                    label="Phone"
+                    variant='outlined'
+                    color='secondary'
+                    required
+                    sx={classes.field}
+                    error={phoneError}
+                    type='number'
+                    fullWidth
+                    onChange={(e) => {
+                        setPhone(e.target.value)
+                    }}
+                />
+                <TextField
+                    label="Email"
+                    variant='outlined'
+                    color='secondary'
+                    fullWidth
+                    required
+                    type='email'
+                    error={emailError}
+                    sx={classes.field}
+                    onChange={(e) => {
+                        setEmail(e.target.value)
+                    }}
+                />
+            </div>
+            <TextField
+                label="Address"
+                variant='outlined'
+                color='secondary'
+                fullWidth
+                required
+                error={addressError}
+                sx={classes.field}
+                onChange={(e) => {
+                    setAddress(e.target.value)
+                }}
+            />
+            <div className='xs:flex md:grid md:grid-cols-2 md:gap-x-5 md:items-stretch'>
+                <TextField
+                    label="Postcode"
+                    variant='outlined'
+                    color='secondary'
+                    required
+                    sx={classes.field}
+                    error={postalError}
+                    type='number'
+                    fullWidth
+                    onChange={(e) => {
+                        setPostal(e.target.value)
+                    }}
+                />
+                <TextField
+                    label="State"
+                    variant='outlined'
+                    color='secondary'
+                    fullWidth
+                    required
+                    error={stateAddrError}
+                    sx={classes.field}
+                    onChange={(e) => {
+                        setStateAddr(e.target.value)
+                    }}
+                />
+            </div>
             <Autocomplete
                 disablePortal
                 value={clothingType}
