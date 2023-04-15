@@ -45,41 +45,45 @@ export const Maker = () => {
         navigate('/job-deets')
       }
 
-    useEffect(() => {
-        getJobList()
-            .then((jobs) => {
-                const jobsList = []
-                const newUserDataCollection = {...userDataCollection}
-                const clothingOptions = {}
-                const statusOptions = {}
+    async function setupTableData() {
+        const newUserDataCollection = {...userDataCollection}
+        const jobsDb = await getJobList()
 
-                clothingTypes.forEach((c) => {
-                    clothingOptions[c.clothingId] = c.label
-                })
-                statusTypes.forEach((s) => {
-                    statusOptions[s.id] = s.name
-                })
+        const jobsList = []
+        const clothingOptions = {}
+        const statusOptions = {}
 
-                jobs.forEach(async (job) => {
-                    const userId = job.userId
-                    if (!(userId in newUserDataCollection)) {
-                        const user = await getUserData(userId)
-                        newUserDataCollection[user.id] = user
-                    }
+        clothingTypes.forEach((c) => {
+            clothingOptions[c.clothingId] = c.label
+        })
+        statusTypes.forEach((s) => {
+            statusOptions[s.id] = s.name
+        })
 
-                    jobsList.push({
-                        location: `${newUserDataCollection[userId].address}, ${newUserDataCollection[userId].postal} ${newUserDataCollection[userId].state}`,
-                        clothingType: clothingOptions[job.clothingId],
-                        quotations: job.quotesNum,
-                        status: statusOptions[job.statusId]
-                    })
-                    
-                });
+        for (var i = 0; i < jobsDb.length; i++) {
+            const job = jobsDb[i]
+            const userId = job.userId
+            if (!(userId in newUserDataCollection)) {
+                const user = await getUserData(userId)
+                newUserDataCollection[user.id] = user
+            }
 
-                setJobs(jobsList)
-                setUserDataCollection(newUserDataCollection)
+            jobsList.push({
+                id: job.id,
+                location: `${newUserDataCollection[userId].address}, ${newUserDataCollection[userId].postal} ${newUserDataCollection[userId].state}`,
+                clothingType: clothingOptions[job.clothingId],
+                quotations: job.quotesNum,
+                status: statusOptions[job.statusId]
             })
-    }, [clothingTypes, statusTypes, userDataCollection])
+        }
+
+        setJobs(jobsList)
+        setUserDataCollection(newUserDataCollection)
+    }
+
+    useEffect(() => {
+        setupTableData()
+    }, [])
 
   return (
     <Container>

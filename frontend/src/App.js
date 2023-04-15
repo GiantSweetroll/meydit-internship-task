@@ -14,25 +14,30 @@ const App = () => {
   const { setClothingTypes, setStatusTypes } = useStateContext()
 
   // get all possible clothings and status types
+
+  async function getAllClothingOptions() {
+    
+    const data = await getClothingTypes()
+    
+    const options = []
+    data.forEach((clothing) => {
+        options.push({
+            label: clothing.type,
+            clothingId: clothing.id
+        })
+    })
+    setClothingTypes(options)
+  }
+
+  async function getAllStatusTypes() {
+    const data = await getStatusTypes()
+    setStatusTypes(data)
+  }
+
   useEffect(() => {
-    getClothingTypes()
-      .then((data) => {
-          const options = []
-          data.forEach((clothing) => {
-              options.push({
-                  label: clothing.type,
-                  clothingId: clothing.id
-              })
-          })
-
-          setClothingTypes(options)
-      })
-
-    getStatusTypes()
-      .then((data) => {
-          setStatusTypes(data)
-      })
-  }, [setClothingTypes, setStatusTypes])
+    getAllClothingOptions()
+    getAllStatusTypes()
+  }, [])
 
   return (
     <BrowserRouter>

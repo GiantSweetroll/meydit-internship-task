@@ -1,29 +1,27 @@
 const hostname = 'http://localhost:3000'
 
 async function getClothingTypes() {
-    const result = await fetch(
+    return await fetch(
         hostname + '/queries/clothings', {
             method: 'GET'
         }
     ).then((res) => {
         if (res.status !== 201 && res.status !== 200) throw new Error(`Error ${res.status}`)
         return res.json()
-    })
-
-    return result.clothingTypes
+    }).then((data) => data.clothingTypes)
 }
 
 async function getStatusTypes() {
-    const result = await fetch(
+    return await fetch(
         hostname + '/queries/statuses', {
             method: 'GET'
         }
     ).then((res) => {
         if (res.status !== 201 && res.status !== 200) throw new Error(`Error ${res.status}`)
         return res.json()
+    }).then((data) => {
+        return data.statuses
     })
-
-    return result.statuses
 }
 
 async function registerUser(user) {
@@ -56,16 +54,14 @@ async function postJob(job) {
 }
 
 async function getJobList() {
-    const result = await fetch(
+    return await fetch(
         hostname + '/maker/jobs', {
             method: 'GET'
         }
     ).then((res) => {
         if (res.status !== 201 && res.status !== 200) throw new Error(`Error ${res.status}`)
         return res.json()
-    })
-
-    return result.jobs
+    }).then((data) => data.jobs)
 }
 
 async function getUserData(id) {
