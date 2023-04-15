@@ -295,7 +295,7 @@
           {
             "name": "imgStr",
             "comment": "BASE64 String",
-            "dataType": "BLOB",
+            "dataType": "LONGBLOB",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -310,14 +310,14 @@
               "pfk": false,
               "widthName": 60,
               "widthComment": 88.71533203125,
-              "widthDataType": 60,
+              "widthDataType": 73.525390625,
               "widthDefault": 60
             },
             "id": "c12e3710-e176-43e1-8145-20f352c33591"
           }
         ],
         "ui": {
-          "active": false,
+          "active": true,
           "left": 542.2915,
           "top": 56.0416,
           "zIndex": 13,
@@ -382,7 +382,7 @@
           "active": false,
           "left": 533.9573,
           "top": 416.2502,
-          "zIndex": 5,
+          "zIndex": 4,
           "widthName": 60,
           "widthComment": 60
         },
@@ -513,7 +513,7 @@
           "active": false,
           "left": 147.3387,
           "top": 291.1343,
-          "zIndex": 6,
+          "zIndex": 5,
           "widthName": 60,
           "widthComment": 60
         },
@@ -667,7 +667,7 @@
           "active": false,
           "left": 526.4343,
           "top": 193.8895,
-          "zIndex": 4,
+          "zIndex": 3,
           "widthName": 60,
           "widthComment": 60
         },

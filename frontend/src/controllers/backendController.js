@@ -5,19 +5,27 @@ async function getClothingTypes() {
         hostname + '/queries/clothings', {
             method: 'GET'
         }
-    ).then(res => res.json())
+    ).then((res) => {
+        if (res.status !== 201 && res.status !== 200) throw new Error(`Error ${res.status}`)
+        return res.json()
+    })
 
     return result.clothingTypes
 }
 
 async function registerUser(user) {
-    await fetch(
+    const result = await fetch(
         hostname + '/auth/register', {
             method: 'POST',
             headers: {"Content-type" : "application/json"},
             body: JSON.stringify(user)
         }
-    )
+    ).then((res) => {
+        if (res.status !== 201 && res.status !== 200) throw new Error(`Error ${res.status}`)
+        return res.json()
+    }).catch((err) => {throw err})
+
+    return result
 }
 
 async function postJob(job) {
@@ -28,6 +36,10 @@ async function postJob(job) {
             body: JSON.stringify(job)
         }
     )
+    .then((res) => {
+        if (res.status !== 201 && res.status !== 200) throw new Error(`Error ${res.status}`)
+    })
+    .catch((err) => {throw err})
 }
 
 module.exports = {

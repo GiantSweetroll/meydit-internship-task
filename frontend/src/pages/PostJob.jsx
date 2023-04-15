@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Autocomplete, Box, Button, Container, InputAdornment, TextField, Typography } from '@mui/material'
 import { ImagePicker } from '../components/ImagePicker'
-import { getClothingTypes, registerUser } from '../controllers/backendController'
+import { getClothingTypes, registerUser, postJob } from '../controllers/backendController'
 
 const PostJob = () => {
     const classes = {
@@ -29,7 +29,6 @@ const PostJob = () => {
             })
     }, [])
     
-
     const [clothingTypes, setClothingTypes] = useState([])
     const [descError, setDescError] = useState(false)
     const [clothingError, setClothingError] = useState(false)
@@ -37,14 +36,14 @@ const PostJob = () => {
     const [clothingType, setClothingType] = useState(null)
     const [images, setImages] = useState([])
     const [desc, setDesc] = useState('')
-    const [budget, setBudget] = useState(null)
+    const [budget, setBudget] = useState('')
     const [firstName, setFirstName] = useState('')
     const [firstNameError, setFirstNameError] = useState(false)
     const [lastName, setLastName] = useState('')
     const [phone, setPhone] = useState('')
     const [phoneError, setPhoneError] = useState(false)
     const [email, setEmail] = useState('')
-    const [emailError, setEmailError] = useState('')
+    const [emailError, setEmailError] = useState(false)
     const [address, setAddress] = useState('')
     const [addressError, setAddressError] = useState(false)
     const [postal, setPostal] = useState('')
@@ -74,8 +73,29 @@ const PostJob = () => {
             && postal
             && stateAddr
         ) {
-            console.log(clothingType, desc, budget)
-            // TODO: Send to backend
+            await registerUser({
+                firstname: firstName,
+                lastName: lastName,
+                phone: phone,
+                email: email,
+                address: address,
+                postal: postal,
+                state: stateAddr,
+                password: 'password123' // just use dummy password
+            }).then(async (res) => {
+                const userId = res.user.id
+                await postJob({
+                    userId: userId,
+                    clothingId: clothingType.clothingId,
+                    description: desc,
+                    statusId: 1,
+                    images: images,
+                    budget: budget
+                }).then((res2) => {
+                    // refresh page
+                    window.location.reload(false)
+                }).catch((err) => {throw err})
+            }).catch((err) => {throw err})
         }
     }
 
@@ -209,6 +229,7 @@ const PostJob = () => {
                 fullWidth
                 multiline
                 minRows={4}
+                value={desc}
                 required
                 sx={classes.field}
                 error={descError}
@@ -227,12 +248,8 @@ const PostJob = () => {
                 Upload images of the type of clothing you want made
             </Typography>
             <ImagePicker
-                onClear={() => setImages([])}
-                onImageUploaded={(image) => {
-                    const newImages = images
-                    console.log(image)
-                    newImages.push(image)
-                    setImages(newImages)
+                onImagesUploaded={(uploadedImages) => {
+                    setImages(uploadedImages)
                 }}
             />
             {imagesError? <Typography
@@ -248,6 +265,7 @@ const PostJob = () => {
                 className='mb-4'
                 label="Budget (Optional)"
                 variant='outlined'
+                value={budget}
                 color='secondary'
                 fullWidth
                 sx={{

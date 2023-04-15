@@ -82,7 +82,7 @@ async function initTables() {
   (
     id     INT      NOT NULL AUTO_INCREMENT,
     jobId  INT      NOT NULL,
-    imgStr BLOB NOT NULL,
+    imgStr LONGBLOB NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (jobId) REFERENCES Jobs(id) ON UPDATE CASCADE
   )`
@@ -158,7 +158,7 @@ async function postJob(job) {
     userId
   ) VALUES (
     ${job.clothingId}, "${job.description}",
-    ${job.budget}, 
+    ${job.budget === ''? null : job.budget}, 
     ${job.statusId}, 
     ${job.userId}
   )`

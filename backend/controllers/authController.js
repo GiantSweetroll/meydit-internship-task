@@ -45,14 +45,15 @@ const register = async (req, res) => {
     const body = req.body
 
     // check email does not exist in the db
-    const dbUser = await db.getUser(body.email)
-    const emailExists = dbUser !== undefined
-    if (emailExists) {
-        return res.status(400).send({
-            'status' : 400,
-            'data' : 'Email already exists'
-        })
-    }
+    // TODO: enable for proper auth email checking
+    // const dbUser = await db.getUser(body.email)
+    // const emailExists = dbUser !== undefined
+    // if (emailExists) {
+    //     return res.status(400).send({
+    //         'status' : 400,
+    //         'data' : 'Email already exists'
+    //     })
+    // }
 
     // create hashed password
     const hPass = await bcrypt.hash(req.body.password, 10)
