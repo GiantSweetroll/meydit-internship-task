@@ -1,16 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Autocomplete, Box, Button, Container, InputAdornment, TextField, Typography } from '@mui/material'
 import { ImagePicker } from '../components/ImagePicker'
+import { getClothingTypes, registerUser } from '../controllers/backendController'
 
 const PostJob = () => {
-
-    // TODO: Retrieve from DB
-    const dummyOptions = [
-        {label: 'Dress', clothingId: 1},
-        {label: 'Ethnic Wear - Sari', clothingId: 2},
-        {label: 'Blouse', clothingId: 3},
-    ]
-
     const classes = {
         field: {
             marginBottom: 2,
@@ -19,10 +12,29 @@ const PostJob = () => {
         },
     }
 
+    // get all possible clothings
+    useEffect(() => {
+        getClothingTypes()
+            .then((data) => {
+                const options = []
+                
+                data.forEach((clothing) => {
+                    options.push({
+                        label: clothing.type,
+                        clothingId: clothing.id
+                    })
+                })
+
+                setClothingTypes(options)
+            })
+    }, [])
+    
+
+    const [clothingTypes, setClothingTypes] = useState([])
     const [descError, setDescError] = useState(false)
     const [clothingError, setClothingError] = useState(false)
     const [imagesError, setImagesError] = useState(false)
-    const [clothingType, setClothingType] = useState({label: 'Dress', clothingId: 1})
+    const [clothingType, setClothingType] = useState(null)
     const [images, setImages] = useState([])
     const [desc, setDesc] = useState('')
     const [budget, setBudget] = useState(null)
@@ -177,10 +189,11 @@ const PostJob = () => {
             <Autocomplete
                 disablePortal
                 value={clothingType}
-                options={dummyOptions}
+                options={clothingTypes}
                 sx={classes.field}
                 renderInput={(params) => <TextField 
                     {...params} 
+                    required
                     label="Types of Clothing" 
                     error={clothingError}
                 />}

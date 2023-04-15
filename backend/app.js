@@ -4,6 +4,7 @@ const cors = require('cors')
 const consumerRoutes = require('./routes/consumerRoutes')
 const authRoutes = require('./routes/authRoutes')
 const makerRoutes = require('./routes/makerRoutes')
+const queryRoutes = require('./routes/queryRoutes')
 
 // express app
 const app = express();
@@ -22,3 +23,4 @@ app.use(express.json());
 app.use('/consumer', consumerRoutes)
 app.use('/auth', authRoutes)
 app.use('/maker', makerRoutes)
+app.use('/queries', queryRoutes)

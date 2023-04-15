@@ -211,6 +211,12 @@ async function getAllJobs() {
   return queryRes[0]
 }
 
+async function getAllClothingTypes() {
+  const query = `SELECT * FROM Clothing`
+  const queryRes = await db.query(query)
+  return queryRes[0]
+}
+
 async function createQuotes(
   makerId, 
   jobId, 
@@ -234,5 +240,6 @@ module.exports = {
   registerUser,
   postJob,
   getAllJobs,
-  createQuotes
+  createQuotes,
+  getAllClothingTypes
 }

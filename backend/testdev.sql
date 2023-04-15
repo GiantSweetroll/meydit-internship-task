@@ -42,3 +42,5 @@ SELECT
   j.statusId, j.userId,
   jobImageId,
   i.imgStr;
+  
+SELECT * FROM Clothing;
