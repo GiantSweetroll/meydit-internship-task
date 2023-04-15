@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useStateContext } from '../contexts/ContextProvider'
 import { Box, Button, Container, ImageList, ImageListItem, InputAdornment, TextField, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 
 export const MakerDetails = () => {
 
@@ -9,6 +10,7 @@ export const MakerDetails = () => {
   const [comments, setComments] = useState('')
   const [priceError, setPriceError] = useState(false)
   const data = selectedJobDetails
+  const navigate = useNavigate()
 
   const dummyImages = [
     {
@@ -53,8 +55,9 @@ export const MakerDetails = () => {
       setPriceError(price === '')
       
       if (price) {
-        console.log(price)
+        console.log(price, comments)
         // TODO: Call backend
+        navigate('/maker')
       }
   }
 
@@ -132,6 +135,7 @@ Sunt ex tempor aliqua esse officia mollit ullamco ullamco ad et consectetur qui 
             <img
               src={item.img}
               srcSet={item.img}
+              alt=''
               loading="lazy"
             />
           </ImageListItem>
