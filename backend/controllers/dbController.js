@@ -82,7 +82,7 @@ async function initTables() {
   (
     id     INT      NOT NULL AUTO_INCREMENT,
     jobId  INT      NOT NULL,
-    imgStr LONGTEXT NOT NULL,
+    imgStr BLOB NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (jobId) REFERENCES Jobs(id) ON UPDATE CASCADE
   )`
