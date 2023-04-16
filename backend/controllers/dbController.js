@@ -253,6 +253,13 @@ async function getJobImages(jobId) {
   return queryRes[0]
 }
 
+async function getJobDetail(jobId) {
+  const query = `SELECT * FROM Jobs WHERE id=${jobId}`
+
+  const queryRes = await db.query(query)
+  return queryRes[0][0]
+}
+
 module.exports = {
   init,
   getUser,
@@ -263,5 +270,6 @@ module.exports = {
   getAllClothingTypes,
   getUserById,
   getAllStatus,
-  getJobImages
+  getJobImages,
+  getJobDetail
 }

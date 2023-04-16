@@ -1,4 +1,5 @@
 const db = require('./dbController')
+const mailer = require('./nodemailerController')
 
 const list_jobs = async (req, res) => {
     const allJobs = await db.getAllJobs()
@@ -15,11 +16,26 @@ const send_quotes = async (req, res) => {
         body.jobId,
         body.price,
         body.comments
-    ).then((result) => {
-
-        // TODO: send notification to consumer's email
+    ).then(async (result) => {
 
         res.send()
+
+        const jobDetails = await db.getJobDetail(body.jobId)
+        const userDetails = await db.getUserById(jobDetails.userId)
+
+        await mailer.sendMail({
+            from: '"Meyd.it" <no-reply@meydit.com>', // sender address
+            to: `"${userDetails.email}"`, // list of receivers
+            subject: "Quotations", // Subject line
+            text: `Hello ${userDetails.firstname},
+            
+            Here are the quotations from the job you posted:
+            Price: A$ ${body.price}
+            Comments:
+            ${body.comments}`, // plain text body
+        }).then((_) => {
+            console.log(`Email sent to ${userDetails.email}`)
+        }).catch(e => console.log(e))
     }).catch((err) => {
         console.log(err)
         res.sendStatus(500)

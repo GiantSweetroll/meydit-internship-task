@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Autocomplete, Box, Button, Container, InputAdornment, TextField, Typography } from '@mui/material'
+import { Autocomplete, Box, Button, Container, InputAdornment, TextField, Typography, ImageList, ImageListItem } from '@mui/material'
 import { ImagePicker } from '../components/ImagePicker'
 import { registerUser, postJob } from '../controllers/backendController'
 import { useStateContext } from '../contexts/ContextProvider'
@@ -21,6 +21,7 @@ const PostJob = () => {
     const [imagesError, setImagesError] = useState(false)
     const [clothingType, setClothingType] = useState(null)
     const [images, setImages] = useState([])
+    const [imagesURI, setImagesURI] = useState([])
     const [desc, setDesc] = useState('')
     const [budget, setBudget] = useState('')
     const [firstName, setFirstName] = useState('')
@@ -117,6 +118,26 @@ const PostJob = () => {
                 }).catch((err) => {throw err})
             }).catch((err) => {throw err})
         }
+    }
+
+    const readImageURIs = async (images) => {
+        // here will be array of promisified functions
+        const promises = []
+      
+        // loop through fileList with for loop
+        for (let i = 0; i < images.length; i++) {
+            const reader = new FileReader()
+            promises.push(new Promise(resolve => {
+                reader.readAsDataURL(images[i])
+                reader.onloadend = function(ev) {
+                    resolve(reader.result)
+                }
+              })
+            )
+        }
+      
+        // array with base64 strings
+        return await Promise.all(promises)
     }
 
   return (
@@ -270,6 +291,11 @@ const PostJob = () => {
             <ImagePicker
                 onImagesUploaded={(uploadedImages) => {
                     setImages(uploadedImages)
+
+                    readImageURIs(uploadedImages)
+                        .then((res) => {
+                            setImagesURI(res)
+                        })
                 }}
             />
             {imagesError? <Typography
@@ -280,6 +306,22 @@ const PostJob = () => {
             >
                 Please upload at least one image
             </Typography> : null}
+            <ImageList 
+                cols={3}
+                sx={{
+                    paddingTop: '20px'
+                }}
+            >
+                {imagesURI.map((item, index) => {
+                    return <ImageListItem key={index}>
+                        <img
+                        src={item}
+                        alt=''
+                        loading="lazy"
+                        />
+                    </ImageListItem>
+                })}
+            </ImageList>
 
             <TextField
                 className='mb-4'
