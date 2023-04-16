@@ -12,6 +12,7 @@ export const MakerDetails = () => {
   const [comments, setComments] = useState('')
   const [priceError, setPriceError] = useState(false)
   const [images, setImages] = useState([])
+  const [sending, setSending] = useState(false)
   const data = selectedJobDetails
   const navigate = useNavigate()
 
@@ -52,6 +53,7 @@ export const MakerDetails = () => {
       setPriceError(price === '')
       
       if (price) {
+        setSending(true)
         sendQuote({
           makerId: 1,   // because no sign in, just use 1
           jobId: selectedJobDetails.id,
@@ -59,6 +61,7 @@ export const MakerDetails = () => {
           comments: comments
         }).then((res) => {
           alert('Quotation sent!')
+          setSending(false)
           navigate('/maker')
         }).catch((err) => console.log(err) )
       }
@@ -70,7 +73,7 @@ export const MakerDetails = () => {
       {/* Header */}
       <div className='flex w-full'>
         {/* Posted By */}
-        <div>
+        <div className='max-w-xs'>
           <ItemText
             text='Posted by:'
           />
@@ -184,6 +187,7 @@ export const MakerDetails = () => {
       />
       <Box textAlign='right'>
           <Button
+              disabled={sending}
               type='submit'
               color='secondary'
               variant='contained'
@@ -193,7 +197,7 @@ export const MakerDetails = () => {
                   paddingRight: 8
               }}
           >
-              Send
+              {sending? 'Sending...': "Send"}
           </Button>
       </Box>
     </form>

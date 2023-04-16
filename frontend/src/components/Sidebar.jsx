@@ -39,14 +39,14 @@ export const Sidebar = (props) => {
                     sx: {
                         width: {
                             md: drawerWidth,
-                            xs: drawerWidth/2
+                            xs: drawerWidth * 0.66
                         }
                     }
                 }}
                 sx={{
                     width: {
                         md: drawerWidth,
-                        xs: drawerWidth/2
+                        xs: drawerWidth * 0.66
                     }
                 }}
             >

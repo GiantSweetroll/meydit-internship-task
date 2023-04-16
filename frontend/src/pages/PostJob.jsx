@@ -37,6 +37,7 @@ const PostJob = () => {
     const [postalError, setPostalError] = useState(false)
     const [stateAddr, setStateAddr] = useState('')
     const [stateAddrError, setStateAddrError] = useState(false)
+    const [uploading, setUploading] = useState(false)
 
     const handleImageUpload = async (images) => {
         const promises = []
@@ -89,6 +90,7 @@ const PostJob = () => {
             && postal
             && stateAddr
         ) {
+            setUploading(true)
             await registerUser({
                 firstname: firstName,
                 lastname: lastName,
@@ -113,6 +115,7 @@ const PostJob = () => {
                     budget: budget
                 }).then((res2) => {
                     alert('Job posted!')
+                    setUploading(false)
                     // refresh page
                     window.location.reload(false)
                 }).catch((err) => {throw err})
@@ -255,7 +258,7 @@ const PostJob = () => {
                 renderInput={(params) => <TextField 
                     {...params} 
                     required
-                    label="Types of Clothing" 
+                    label="Type of Clothing" 
                     error={clothingError}
                 />}
                 isOptionEqualToValue={(option, value) => option.clothingId === value.clothingId}
@@ -345,6 +348,7 @@ const PostJob = () => {
 
             <Box textAlign='center'>
                 <Button
+                    disabled={uploading}
                     type='submit'
                     color='secondary'
                     variant='contained'
@@ -353,7 +357,7 @@ const PostJob = () => {
                         paddingRight: 10
                     }}
                 >
-                    Post
+                    {uploading? "Uploading..." : "Post"}
                 </Button>
             </Box>
         </form>
