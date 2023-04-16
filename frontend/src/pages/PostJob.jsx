@@ -90,7 +90,7 @@ const PostJob = () => {
         ) {
             await registerUser({
                 firstname: firstName,
-                lastName: lastName,
+                lastname: lastName,
                 phone: phone,
                 email: email,
                 address: address,
@@ -111,6 +111,7 @@ const PostJob = () => {
                     images: imgUrls,
                     budget: budget
                 }).then((res2) => {
+                    alert('Job posted!')
                     // refresh page
                     window.location.reload(false)
                 }).catch((err) => {throw err})
