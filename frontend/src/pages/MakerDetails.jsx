@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useStateContext } from '../contexts/ContextProvider'
 import { Box, Button, Container, ImageList, ImageListItem, InputAdornment, TextField, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { getJobImages } from '../controllers/backendController'
+import { getJobImages, sendQuote } from '../controllers/backendController'
 import { getObject } from '@syncfusion/ej2-react-grids'
 
 export const MakerDetails = () => {
@@ -52,9 +52,15 @@ export const MakerDetails = () => {
       setPriceError(price === '')
       
       if (price) {
-        console.log(price, comments)
-        // TODO: Call backend
-        navigate('/maker')
+        sendQuote({
+          makerId: 1,   // because no sign in, just use 1
+          jobId: selectedJobDetails.id,
+          price: price,
+          comments: comments
+        }).then((res) => {
+          alert('Quotation sent!')
+          navigate('/maker')
+        }).catch((err) => console.log(err) )
       }
   }
 

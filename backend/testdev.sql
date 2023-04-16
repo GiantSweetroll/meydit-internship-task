@@ -58,4 +58,6 @@ SELECT
   j.statusId, j.userId;
   
 SELECT * FROM JobImages;
-SELECT * FROM JobImages;
+SELECT * FROM Jobs;
+SELECT * FROM User;
+SELECT * FROM Quotes;

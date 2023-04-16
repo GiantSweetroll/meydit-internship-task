@@ -87,6 +87,20 @@ async function getJobImages(jobId) {
     return result.images
 }
 
+async function sendQuote(quote) {
+    await fetch(
+        hostname + '/maker/send-quotes', {
+            method: 'POST',
+            headers: {"Content-type" : "application/json"},
+            body: JSON.stringify(quote)
+        }
+    )
+    .then((res) => {
+        if (res.status !== 201 && res.status !== 200) throw new Error(`Error ${res.status}`)
+    })
+    .catch((err) => {throw err})
+}
+
 module.exports = {
     registerUser,
     postJob,
@@ -94,5 +108,6 @@ module.exports = {
     getJobList,
     getUserData,
     getStatusTypes,
-    getJobImages
+    getJobImages,
+    sendQuote
 }
