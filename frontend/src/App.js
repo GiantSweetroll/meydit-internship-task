@@ -20,12 +20,15 @@ const App = () => {
     const data = await getClothingTypes()
     
     const options = []
-    data.forEach((clothing) => {
-        options.push({
-            label: clothing.type,
-            clothingId: clothing.id
-        })
-    })
+
+    for (var i = 0; i < data.length; i++) {
+      const clothing = data[i]
+      options.push({
+          label: clothing.type,
+          clothingId: clothing.id
+      })
+    }
+    
     setClothingTypes(options)
   }
 

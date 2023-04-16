@@ -56,3 +56,6 @@ SELECT
   GROUP BY j.id, j.clothingId, 
   j.descr, j.budget, 
   j.statusId, j.userId;
+  
+SELECT * FROM JobImages;
+SELECT * FROM JobImages;

@@ -295,7 +295,7 @@
           {
             "name": "imgStr",
             "comment": "BASE64 String",
-            "dataType": "LONGBLOB",
+            "dataType": "LONGTEXT",
             "default": "",
             "option": {
               "autoIncrement": false,
@@ -310,7 +310,7 @@
               "pfk": false,
               "widthName": 60,
               "widthComment": 88.71533203125,
-              "widthDataType": 73.525390625,
+              "widthDataType": 72.0654296875,
               "widthDefault": 60
             },
             "id": "c12e3710-e176-43e1-8145-20f352c33591"
@@ -320,7 +320,7 @@
           "active": true,
           "left": 542.2915,
           "top": 56.0416,
-          "zIndex": 13,
+          "zIndex": 10,
           "widthName": 65.5908203125,
           "widthComment": 60
         },

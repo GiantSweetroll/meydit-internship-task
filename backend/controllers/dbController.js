@@ -82,7 +82,7 @@ async function initTables() {
   (
     id     INT      NOT NULL AUTO_INCREMENT,
     jobId  INT      NOT NULL,
-    imgStr LONGBLOB NOT NULL,
+    imgStr TEXT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (jobId) REFERENCES Jobs(id) ON UPDATE CASCADE
   )`
@@ -136,6 +136,9 @@ async function getUserById(id) {
 }
 
 async function registerUser(user) {
+  if (user.lastname === undefined) {
+    user.lastname = null
+  }
   const query = `INSERT INTO User (
     firstname, lastname, 
     phone, email, 
@@ -179,7 +182,7 @@ async function postJob(job) {
   query = `SELECT * FROM Jobs WHERE
   clothingId=${job.clothingId} AND
   descr="${job.description}" AND
-  ${job.budget === null? "budget IS NULL" : `budget=${job.budget}`} AND
+  ${job.budget === null || job.budget === ''? "budget IS NULL" : `budget=${job.budget}`} AND
   statusId=${job.statusId} AND
   userId=${job.userId}`
   const queryResult = await db.query(query)
@@ -243,6 +246,13 @@ async function createQuotes(
   return await db.query(query)
 }
 
+async function getJobImages(jobId) {
+  const query = `SELECT * FROM JobImages WHERE jobId=${jobId}`
+
+  const queryRes = await db.query(query)
+  return queryRes[0]
+}
+
 module.exports = {
   init,
   getUser,
@@ -252,5 +262,6 @@ module.exports = {
   createQuotes,
   getAllClothingTypes,
   getUserById,
-  getAllStatus
+  getAllStatus,
+  getJobImages
 }

@@ -6,10 +6,11 @@ export const ImagePicker = ({ onImagesUploaded }) => {
     const { register } = useForm();
 
     const handleUploadClick = (event) => {
-        fileListToBase64(event.target.files)
-            .then((res) => {
-                onImagesUploaded(res)
-            })
+        // fileListToBase64(event.target.files)
+        //     .then((res) => {
+        //         onImagesUploaded(res)
+        //     })
+        onImagesUploaded(event.target.files)
       };
 
       // credits: https://stackoverflow.com/questions/15960508/javascript-async-readasdataurl-multiple-files
@@ -41,7 +42,7 @@ export const ImagePicker = ({ onImagesUploaded }) => {
     <input
         accept="image/jpeg,image/png,image/tiff,image/webp"
         id="contained-button-file"
-        name="logo"
+        name="files"
         {...register('image', { required: true })}
         type="file"
         multiple="multiple"

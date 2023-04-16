@@ -74,3 +74,8 @@ GET http://localhost:3000/queries/user/1
 
 # get all status types
 GET http://localhost:3000/queries/statuses
+
+###
+
+# get all images associated with the particular job
+GET http://localhost:3000/queries/job-images/2

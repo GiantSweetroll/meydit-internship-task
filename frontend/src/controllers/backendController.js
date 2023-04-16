@@ -77,11 +77,22 @@ async function getUserData(id) {
     return result.user
 }
 
+async function getJobImages(jobId) {
+    const result = await fetch(
+        hostname + `/queries/job-images/${jobId}`
+    ).then((res) => {
+        if (res.status !== 201 && res.status !== 200) throw new Error(`Error ${res.status}`)
+        return res.json()
+    })
+    return result.images
+}
+
 module.exports = {
     registerUser,
     postJob,
     getClothingTypes,
     getJobList,
     getUserData,
-    getStatusTypes
+    getStatusTypes,
+    getJobImages
 }

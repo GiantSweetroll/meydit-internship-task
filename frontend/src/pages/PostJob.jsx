@@ -3,6 +3,7 @@ import { Autocomplete, Box, Button, Container, InputAdornment, TextField, Typogr
 import { ImagePicker } from '../components/ImagePicker'
 import { registerUser, postJob } from '../controllers/backendController'
 import { useStateContext } from '../contexts/ContextProvider'
+import { uploadImage } from '../controllers/firebaseController'
 
 const PostJob = () => {
     
@@ -35,6 +36,35 @@ const PostJob = () => {
     const [postalError, setPostalError] = useState(false)
     const [stateAddr, setStateAddr] = useState('')
     const [stateAddrError, setStateAddrError] = useState(false)
+
+    const handleImageUpload = async (images) => {
+        const promises = []
+        const urls = []
+        for (const image of images) {
+
+            // rename file
+            const fname = image.name
+            const fileExt = fname.slice((fname.lastIndexOf(".") - 1 >>> 0) + 2)
+            const rNum = Math.floor(Math.random() * 100)
+            const dateStr = (new Date()).toString()
+            var newFileName = `${rNum}-${dateStr}-${fname}.${fileExt}`
+            const newImage = new File([image], newFileName)
+
+            promises.push(new Promise((resolve, reject) => {
+                uploadImage(newImage).then((res) => {
+                    urls.push(res)
+                    resolve()
+                }).catch((err) => {
+                    console.log(err)
+                    reject()
+                })
+            }))
+        }
+
+        await Promise.all(promises)
+
+        return urls
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()    // So it doesnt refresh the page
@@ -69,12 +99,16 @@ const PostJob = () => {
                 password: 'password123' // just use dummy password
             }).then(async (res) => {
                 const userId = res.user.id
+
+                // upload images to firebase 
+                const imgUrls = await handleImageUpload(images)
+
                 await postJob({
                     userId: userId,
                     clothingId: clothingType.clothingId,
                     description: desc,
                     statusId: 1,
-                    images: images,
+                    images: imgUrls,
                     budget: budget
                 }).then((res2) => {
                     // refresh page
