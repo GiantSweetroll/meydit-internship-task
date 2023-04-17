@@ -1,4 +1,5 @@
 USE meyditDev;
+USE meydit;
 
 SHOW TABLES;
 

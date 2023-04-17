@@ -7,7 +7,8 @@ import { Maker } from './pages/Maker';
 import { MakerDetails } from './pages/MakerDetails'
 import { Sidebar } from './components/Sidebar';
 import { useStateContext } from './contexts/ContextProvider';
-import { getClothingTypes, getStatusTypes } from './controllers/backendController';
+import {getClothingTypes} from './controllers/backendController';
+import {getStatusTypes} from './controllers/backendController'
 
 const App = () => {
 

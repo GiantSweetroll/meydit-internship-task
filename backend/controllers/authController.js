@@ -1,45 +1,45 @@
-const bcrypt = require('bcrypt')
+// const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/dbModels')
 const db = require('./dbController');
 
-const login = async (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
+// const login = async (req, res) => {
+//     const email = req.body.email;
+//     const password = req.body.password;
 
-    // check if email exists
-    const dbUser = await db.getUser(email)
-    const emailExists = dbUser !== undefined;
-    if (!emailExists) {
-        return res.status(400).send({
-            'status' : 400,
-            'data' : 'A user with that email cannot be found'
-        });
-    }
+//     // check if email exists
+//     const dbUser = await db.getUser(email)
+//     const emailExists = dbUser !== undefined;
+//     if (!emailExists) {
+//         return res.status(400).send({
+//             'status' : 400,
+//             'data' : 'A user with that email cannot be found'
+//         });
+//     }
 
-    // check password
-    try {
-        if (await bcrypt.compare(password, dbUser.hashedPassword)) {
+//     // check password
+//     try {
+//         if (await bcrypt.compare(password, dbUser.hashedPassword)) {
 
-            const accessToken = generateAccessToken(dbUser);
-            const {hashedPassword, ...user} = dbUser 
+//             const accessToken = generateAccessToken(dbUser);
+//             const {hashedPassword, ...user} = dbUser 
 
-            return res.send({
-                'user' : user,
-                'accessToken': accessToken
-            });
-        } else {
-            return res.status(400).send({
-                'status' : 400,
-                'data' : 'Incorrect email or password'
-            });
-        }
-    } catch (error) {
-        console.log(error);
-        return res.sendStatus(500);
-    }
+//             return res.send({
+//                 'user' : user,
+//                 'accessToken': accessToken
+//             });
+//         } else {
+//             return res.status(400).send({
+//                 'status' : 400,
+//                 'data' : 'Incorrect email or password'
+//             });
+//         }
+//     } catch (error) {
+//         console.log(error);
+//         return res.sendStatus(500);
+//     }
 
-}
+// }
 
 const register = async (req, res) => {
     const body = req.body
@@ -56,7 +56,8 @@ const register = async (req, res) => {
     // }
 
     // create hashed password
-    const hPass = await bcrypt.hash(req.body.password, 10)
+    // const hPass = await bcrypt.hash(req.body.password, 10)
+    const hPass = 'somehashedpassword123ASKDHAldhk11ukcdjds'
 
     var user = {
         ...body,
@@ -101,7 +102,7 @@ function authenticateToken(req, res, next) {
 }
 
 module.exports = {
-    login,
+    // login,
     register,
     authenticateToken
 }

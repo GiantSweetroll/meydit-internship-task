@@ -1,6 +1,6 @@
-const hostname = 'http://localhost:3000'
+const hostname = 'https://meydit-assignment-wq3yki57wq-ts.a.run.app'
 
-async function getClothingTypes() {
+export async function getClothingTypes() {
     return await fetch(
         hostname + '/queries/clothings', {
             method: 'GET'
@@ -11,7 +11,7 @@ async function getClothingTypes() {
     }).then((data) => data.clothingTypes)
 }
 
-async function getStatusTypes() {
+export async function getStatusTypes() {
     return await fetch(
         hostname + '/queries/statuses', {
             method: 'GET'
@@ -24,7 +24,7 @@ async function getStatusTypes() {
     })
 }
 
-async function registerUser(user) {
+export async function registerUser(user) {
     const result = await fetch(
         hostname + '/auth/register', {
             method: 'POST',
@@ -39,7 +39,7 @@ async function registerUser(user) {
     return result
 }
 
-async function postJob(job) {
+export async function postJob(job) {
     await fetch(
         hostname + '/consumer/job', {
             method: 'POST',
@@ -53,7 +53,7 @@ async function postJob(job) {
     .catch((err) => {throw err})
 }
 
-async function getJobList() {
+export async function getJobList() {
     return await fetch(
         hostname + '/maker/jobs', {
             method: 'GET'
@@ -64,7 +64,7 @@ async function getJobList() {
     }).then((data) => data.jobs)
 }
 
-async function getUserData(id) {
+export async function getUserData(id) {
     const result = await fetch(
         hostname + `/queries/user/${id}`, {
             method: 'GET'
@@ -77,7 +77,7 @@ async function getUserData(id) {
     return result.user
 }
 
-async function getJobImages(jobId) {
+export async function getJobImages(jobId) {
     const result = await fetch(
         hostname + `/queries/job-images/${jobId}`
     ).then((res) => {
@@ -87,7 +87,7 @@ async function getJobImages(jobId) {
     return result.images
 }
 
-async function sendQuote(quote) {
+export async function sendQuote(quote) {
     await fetch(
         hostname + '/maker/send-quotes', {
             method: 'POST',
@@ -99,15 +99,4 @@ async function sendQuote(quote) {
         if (res.status !== 201 && res.status !== 200) throw new Error(`Error ${res.status}`)
     })
     .catch((err) => {throw err})
-}
-
-module.exports = {
-    registerUser,
-    postJob,
-    getClothingTypes,
-    getJobList,
-    getUserData,
-    getStatusTypes,
-    getJobImages,
-    sendQuote
 }

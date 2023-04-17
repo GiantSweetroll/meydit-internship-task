@@ -78,4 +78,4 @@ GET http://localhost:3000/queries/statuses
 ###
 
 # get all images associated with the particular job
-GET http://localhost:3000/queries/job-images/2
+GET http://localhost:3000/queries/job-images/7
