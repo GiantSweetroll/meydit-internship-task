@@ -4,17 +4,20 @@ const mysql = require('mysql2/promise');
 var db = null
 
 async function init() {
-  db = await mysql.createConnection({
+  const dbHost = process.env.DB_HOST ?? "localhost"
+  const dbUsed = process.env.DB_USE ?? 'meyditDev'
+  db = await mysql.createPool({
     host: process.env.DB_HOST ?? "localhost",
-    user: "root",
-    password: "password",
-    port: 3306
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    port: process.env.DB_PORT,
+    database: dbUsed
+    // socketPath: `/cloudsql/white-notch-384000:australia-southeast1:meydit-assignment-sql`
   });
   
   console.log("Connected to MySQL Database!");
 
   // create database if not exist
-  const dbUsed = process.env.DB_USE ?? 'meyditDev'
   await db.query(`CREATE DATABASE IF NOT EXISTS ${dbUsed}`)
     .catch((err) => {throw err})
 
