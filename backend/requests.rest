@@ -68,7 +68,7 @@ GET http://localhost:3000/queries/clothings
 ###
 
 # get user
-GET http://localhost:3000/queries/user/1
+GET http://localhost:3000/queries/user/3
 
 ###
 

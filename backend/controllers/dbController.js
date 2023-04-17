@@ -122,7 +122,22 @@ async function initData() {
   await db.query(query)
 }
 
-async function getUser(email) {
+async function getUser(user) {
+  const query = `SELECT * FROM User WHERE
+	  firstname="${user.firstname}" AND
+    lastname="${user.lastname}" AND
+    phone="${user.phone}" AND
+    email="${user.email}" AND
+    address="${user.address}" AND
+    postal="${user.postal}" AND
+    state="${user.state}"`
+
+    const res = await db.execute(query)
+
+    return res[0][0]
+}
+
+async function getUserByEmail(email) {
   const query = `SELECT * FROM User WHERE email="${email}"`
 
   const res = await db.execute(query)
@@ -265,6 +280,7 @@ async function getJobDetail(jobId) {
 
 module.exports = {
   init,
+  getUserByEmail,
   getUser,
   registerUser,
   postJob,

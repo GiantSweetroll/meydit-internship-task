@@ -1,6 +1,5 @@
 // const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const User = require('../models/dbModels')
 const db = require('./dbController');
 
 // const login = async (req, res) => {
@@ -67,7 +66,7 @@ const register = async (req, res) => {
     // insert user details into the db
     await db.registerUser(user)
 
-    user = await db.getUser(user.email)
+    user = await db.getUser(user)
 
     const token = generateAccessToken(user)
 

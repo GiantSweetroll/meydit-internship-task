@@ -27,12 +27,7 @@ const send_quotes = async (req, res) => {
             from: '"Meyd.it" <no-reply@meydit.com>', // sender address
             to: `"${userDetails.email}"`, // list of receivers
             subject: "Quotations", // Subject line
-            text: `Hello ${userDetails.firstname},
-            
-            Here are the quotations from the job you posted:
-            Price: A$ ${body.price}
-            Comments:
-            ${body.comments}`, // plain text body
+            text: `Hello ${userDetails.firstname},\n\nHere are the quotations from the job you posted:\nPrice: A$${body.price}\nComments:\n${body.comments}`, // plain text body
         }).then((_) => {
             console.log(`Email sent to ${userDetails.email}`)
         }).catch(e => console.log(e))

@@ -42,6 +42,8 @@ const get_user = async (req, res) => {
             console.log(err)
             return res.sendStatus(500)
         })
+    
+    if (result === undefined) return res.status(400).send('User not found')
 
     const { hashedPassword, ...newResult } = result
     
