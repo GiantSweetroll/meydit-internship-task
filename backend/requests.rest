@@ -8,6 +8,7 @@ Content-Type: application/json
     "description": "Id cupidatat dolore id magna consequat dolore elit voluptate culpa.",
     "statusId" : 1,
     "budget" : null,
+    "datePosted" : "04 Dec 1995 00:12:00 GMT",
     "images" : [
         "imagebytes1",
         "imagebytes2",
@@ -68,7 +69,7 @@ GET http://localhost:3000/queries/clothings
 ###
 
 # get user
-GET http://localhost:3000/queries/user/3
+GET http://localhost:3000/queries/user/2
 
 ###
 

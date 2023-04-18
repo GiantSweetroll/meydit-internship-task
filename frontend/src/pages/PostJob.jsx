@@ -38,6 +38,7 @@ const PostJob = () => {
     const [stateAddr, setStateAddr] = useState('')
     const [stateAddrError, setStateAddrError] = useState(false)
     const [uploading, setUploading] = useState(false)
+    const [uploadError, setUploadError] = useState('')
 
     const handleImageUpload = async (images) => {
         const promises = []
@@ -80,6 +81,7 @@ const PostJob = () => {
         setDescError(desc === '')
         setClothingError(clothingType === null)
         setImagesError(images.length === 0)
+        setUploadError('')
 
         if (clothingType 
             && desc 
@@ -106,20 +108,26 @@ const PostJob = () => {
                 // upload images to firebase 
                 const imgUrls = await handleImageUpload(images)
 
-                await postJob({
+                return await postJob({
                     userId: userId,
                     clothingId: clothingType.clothingId,
                     description: desc,
                     statusId: 1,
                     images: imgUrls,
-                    budget: budget
+                    budget: budget,
+                    datePosted: (new Date()).toISOString(),
                 }).then((res2) => {
                     alert('Job posted!')
                     setUploading(false)
                     // refresh page
                     window.location.reload(false)
-                }).catch((err) => {throw err})
-            }).catch((err) => {throw err})
+                })
+            }).catch((err) => {
+                console.log(err)
+                setUploading(false)
+                setUploadError('Unable to post job, please try again')
+                throw err
+            })
         }
     }
 
@@ -359,6 +367,16 @@ const PostJob = () => {
                 >
                     {uploading? "Uploading..." : "Post"}
                 </Button>
+            </Box>
+            <Box textAlign='center'>
+                {uploadError? <Typography
+                    color='error'
+                    sx={{
+                        marginTop: '5px'
+                    }}
+                >
+                    {uploadError}
+                </Typography> : null}
             </Box>
         </form>
 

@@ -4,6 +4,7 @@ import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inje
 import { useStateContext } from '../contexts/ContextProvider';
 import { useNavigate } from 'react-router-dom';
 import { getJobList, getUserData } from '../controllers/backendController';
+import { format } from 'date-fns'
 
 export const Maker = () => {
 
@@ -14,9 +15,9 @@ export const Maker = () => {
 
     const jobsGrid = [
         { 
-            headerText: 'Location',
-            field: 'location',
-            width: '250',
+            headerText: 'Date Posted',
+            field: 'datePosted',
+            width: '100',
             textAlign: 'Left',
             headerTextAlign : 'Left' 
         },
@@ -26,6 +27,13 @@ export const Maker = () => {
             width: '150',
             textAlign: 'Left',
             headerTextAlign : 'Left'
+        },
+        { 
+            headerText: 'Location',
+            field: 'location',
+            width: '250',
+            textAlign: 'Left',
+            headerTextAlign : 'Left' 
         },
         { 
             field: 'clothingType',
@@ -45,8 +53,8 @@ export const Maker = () => {
             field: 'status',
             headerText: 'Status',
             width: '120',
-            textAlign: 'Center',
-            headerTextAlign : 'Center'
+            textAlign: 'Left',
+            headerTextAlign : 'Left'
         },
       
       ];
@@ -92,6 +100,7 @@ export const Maker = () => {
                 fullName: `${newUserDataCollection[userId].firstname} ${newUserDataCollection[userId].lastname}`,
                 email: newUserDataCollection[userId].email,
                 budget: job.budget,
+                datePosted: format(new Date(job.datePosted), 'do MMMM Y'),
             })
         }
 

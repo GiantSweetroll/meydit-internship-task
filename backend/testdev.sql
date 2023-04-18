@@ -62,3 +62,4 @@ SELECT * FROM JobImages;
 SELECT * FROM Jobs;
 SELECT * FROM User;
 SELECT * FROM Quotes;
+SELECT * FROM Status;

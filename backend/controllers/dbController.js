@@ -6,7 +6,7 @@ var db = null
 async function init() {
   const dbHost = process.env.DB_HOST ?? "localhost"
   const dbUsed = process.env.DB_USE ?? 'meyditDev'
-  db = await mysql.createPool({
+  db = mysql.createPool({
     host: process.env.DB_HOST ?? "localhost",
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
@@ -74,6 +74,7 @@ async function initTables() {
     budget     DOUBLE NULL    ,
     statusId   INT    NOT NULL,
     userId     INT    NOT NULL,
+    datePosted TEXT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (statusId) REFERENCES Status(id) ON UPDATE CASCADE,
     FOREIGN KEY (clothingId) REFERENCES Clothing(id) ON UPDATE CASCADE,
@@ -184,12 +185,14 @@ async function postJob(job) {
     clothingId, descr, 
     budget, 
     statusId,
-    userId
+    userId,
+    datePosted
   ) VALUES (
     ${job.clothingId}, "${job.description}",
     ${job.budget === ''? null : job.budget}, 
     ${job.statusId}, 
-    ${job.userId}
+    ${job.userId},
+    "${job.datePosted}"
   )`
   await db.query(query)
 
@@ -202,7 +205,8 @@ async function postJob(job) {
   descr="${job.description}" AND
   ${job.budget === null || job.budget === ''? "budget IS NULL" : `budget=${job.budget}`} AND
   statusId=${job.statusId} AND
-  userId=${job.userId}`
+  userId=${job.userId} AND
+  datePosted="${job.datePosted}"`
   const queryResult = await db.query(query)
   const newJob = queryResult[0][0]
 
@@ -224,13 +228,14 @@ async function getAllJobs() {
   j.id, j.clothingId, 
   j.descr, j.budget, 
   j.statusId, j.userId,
+  j.datePosted,
   COUNT(q.id) as quotesNum 
   FROM Jobs j
   LEFT JOIN Quotes q
   ON j.id = q.jobId
   GROUP BY j.id, j.clothingId, 
   j.descr, j.budget, 
-  j.statusId, j.userId`
+  j.statusId, j.userId, j.datePosted ORDER BY j.datePosted DESC`
   var queryRes = await db.query(query)
   return queryRes[0]
 }

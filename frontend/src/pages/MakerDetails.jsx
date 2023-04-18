@@ -88,6 +88,33 @@ export const MakerDetails = () => {
             text={data.location}
           />
         </div>
+        {/* Date Posted */}
+        <div className='flex-grow'>
+          <ItemText
+            text='Date Posted'
+            align='right'
+          />
+          <ContentText
+            text={data.datePosted}
+            color='textPrimary'
+            align='right'
+          />
+        </div>
+      </div>
+
+      <div className='m-20' />
+
+      <div className='flex w-full'>
+        {/* Type of clothing */}
+        <div className='max-w-xs'>
+          <ItemText
+            text='Type of Clothing'
+          />
+          <ContentText
+            text={data.clothingType}
+          />
+        </div>
+        
         {/* Budget */}
         <div className='flex-grow'>
           <ItemText
@@ -97,21 +124,6 @@ export const MakerDetails = () => {
           <ContentText
             text={data.budget === undefined || data.budget === null? "Unspecified" : `A$ ${data.budget}`}
             color='textPrimary'
-            align='right'
-          />
-        </div>
-      </div>
-
-      <div className='m-20' />
-
-      {/* Type of clothing */}
-      <div className='flex w-full'>
-        <ItemText
-          text='Type of Clothing'
-        />
-        <div className='flex-grow'>
-          <ContentText
-            text={data.clothingType}
             align='right'
           />
         </div>
