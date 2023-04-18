@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from 'react';
 const StateContext = createContext();
 
 export const ContextProvider = ({children}) => {
-    const [selectedJobDetails, setSelectedJobDetails] = useState({})
+    const [selectedJobDetails, setSelectedJobDetails] = useState(JSON.parse(localStorage.getItem('selectedJob')) ?? {})
     const [clothingTypes, setClothingTypes] = useState([])
     const [statusTypes, setStatusTypes] = useState([])
 

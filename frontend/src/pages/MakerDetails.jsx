@@ -82,6 +82,9 @@ export const MakerDetails = () => {
             color='textPrimary'
           />
           <ContentText
+            text={data.email}
+          />
+          <ContentText
             text={data.location}
           />
         </div>

@@ -17,31 +17,43 @@ export const Maker = () => {
             headerText: 'Location',
             field: 'location',
             width: '250',
-            textAlign: 'Left' 
+            textAlign: 'Left',
+            headerTextAlign : 'Left' 
+        },
+        { 
+            headerText: 'Posted by',
+            field: 'fullName',
+            width: '150',
+            textAlign: 'Left',
+            headerTextAlign : 'Left'
         },
         { 
             field: 'clothingType',
             headerText: 'Type of Clothing',
             width: '150',
-            textAlign: 'Center' 
+            textAlign: 'Center',
+            headerTextAlign : 'Center'
         },
         { 
             field: 'quotations',
             headerText: 'Quotations',
             width: '100',
-            textAlign: 'Center' 
+            textAlign: 'Center',
+            headerTextAlign : 'Center'
         },
         { 
             field: 'status',
             headerText: 'Status',
             width: '120',
             textAlign: 'Center',
+            headerTextAlign : 'Center'
         },
       
       ];
 
       const handleRowSelection = (row) => {
         setSelectedJobDetails(row.data)
+        localStorage.setItem('selectedJob', JSON.stringify(row.data))
         navigate('/job-deets')
       }
 
@@ -77,6 +89,8 @@ export const Maker = () => {
                 desc: job.descr,
                 firstName: newUserDataCollection[userId].firstname,
                 lastName: newUserDataCollection[userId].lastname,
+                fullName: `${newUserDataCollection[userId].firstname} ${newUserDataCollection[userId].lastname}`,
+                email: newUserDataCollection[userId].email,
                 budget: job.budget,
             })
         }
@@ -87,7 +101,7 @@ export const Maker = () => {
 
     useEffect(() => {
         setupTableData()
-    }, [])
+    }, [clothingTypes, statusTypes])
 
   return (
     <Container>
