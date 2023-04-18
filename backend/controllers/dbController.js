@@ -111,7 +111,11 @@ async function initData() {
   var query = `INSERT INTO Clothing (id, type) VALUES 
   (1, "Dress"),
   (2, "Ethnic Wear - Sari"),
-  (3, "Blouse") 
+  (3, "Blouse"),
+  (4, "Tuxedo"),
+  (5, "Ethnic Wear - Kebaya"),
+  (6, "Wedding Dress"),
+  (7, "Suit")
   ON DUPLICATE KEY UPDATE id=id`
   await db.query(query)
 
@@ -241,7 +245,7 @@ async function getAllJobs() {
 }
 
 async function getAllClothingTypes() {
-  const query = `SELECT * FROM Clothing`
+  const query = `SELECT * FROM Clothing ORDER BY type`
   const queryRes = await db.query(query)
   return queryRes[0]
 }
