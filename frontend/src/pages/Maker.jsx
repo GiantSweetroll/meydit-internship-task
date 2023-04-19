@@ -93,6 +93,7 @@ export const Maker = () => {
                 location: `${newUserDataCollection[userId].address}, ${newUserDataCollection[userId].postal} ${newUserDataCollection[userId].state}`,
                 clothingType: clothingOptions[job.clothingId],
                 quotations: job.quotesNum,
+                phone: newUserDataCollection[userId].phone,
                 status: statusOptions[job.statusId],
                 desc: job.descr,
                 firstName: newUserDataCollection[userId].firstname,

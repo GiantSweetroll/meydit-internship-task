@@ -1,4 +1,5 @@
 const hostname = 'https://meydit-assignment-wq3yki57wq-ts.a.run.app'
+// const hostname = 'http://localhost:3000'
 
 export async function getClothingTypes() {
     return await fetch(

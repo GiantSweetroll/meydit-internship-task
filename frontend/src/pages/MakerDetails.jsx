@@ -87,6 +87,9 @@ export const MakerDetails = () => {
             text={data.email}
           />
           <ContentText
+            text={data.phone}
+          />
+          <ContentText
             text={data.location}
           />
         </div>
